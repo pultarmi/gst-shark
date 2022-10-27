@@ -118,7 +118,7 @@ cdata.set_quoted('PLUGINDIR', plugins_install_dir, description: 'Directory where
 cdata.set_quoted('VERSION', gst_shark_version, description: 'Version number of package')
 
 if gst_shark_version_nano > 0
-    # Have GST_ERROR message printfed when running from git
+    # Have GST_ERROR message printed when running from git
     cdata.set('GST_LEVEL_DEFAULT', 'GST_LEVEL_ERROR', description : 'Default errorlevel to use')
 else
     cdata.set('GST_LEVEL_DEFAULT', 'GST_LEVEL_NONE', description : 'Default errorlevel to use')

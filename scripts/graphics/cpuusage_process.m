@@ -11,7 +11,7 @@ function [serie_name_list timestamp_mat value_mat] = cpuusage_process()
     # Open tracer data
     fileID = fopen('cpuusage_fields.mat');
     if -1 == fileID
-        printff('Octave: ERROR: fopen cannot open the file %s\n',file_name);
+        printf('Octave: ERROR: fopen cannot open the file %s\n',file_name);
         serie_name_list{1} = "";
         timestamp_mat = 0;
         value_mat = 0;

@@ -51,11 +51,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save cpuusage figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('cpuusage','-dpng');
+                    print('cpuusage','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -94,11 +94,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save framerate figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('framerate','-dpng');
+                    print('framerate','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -127,11 +127,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save interlatency figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('interlatency','-dpng');
+                    print('interlatency','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -160,11 +160,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save proctime figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('proctime','-dpng');
+                    print('proctime','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -193,11 +193,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save scheduling figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('scheduling','-dpng');
+                    print('scheduling','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -226,11 +226,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save bitrate figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('bitrate','-dpng');
+                    print('bitrate','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -259,11 +259,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save queuelevel figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('queuelevel','-dpng');
+                    print('queuelevel','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -298,11 +298,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save cpuusage vs framerate figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('cpuusage_framerate','-dpng');
+                    print('cpuusage_framerate','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -338,11 +338,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save cpuusage (cores) vs framerate figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('cpuusage-cores_framerate','-dpng');
+                    print('cpuusage-cores_framerate','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern
@@ -371,11 +371,11 @@ function plot_tracer(tracer,savefig,format,legend_location)
             disp('Save buffer figure...')
             switch format
                 case 'pdf'
-                    printf tracer -dpdf -append
+                    print tracer -dpdf -append
                 case 'png'
-                    printf('buffer','-dpng');
+                    print('buffer','-dpng');
                 otherwise
-                    printff('octave: WARN: %s is not supported',format)
+                    printf('octave: WARN: %s is not supported',format)
             end
         end
         # Create a new figure if the legend location is extern

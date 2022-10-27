@@ -108,7 +108,7 @@ cpu_usage_thread_func (GstPeriodicTracer * tracer)
   for (cpu_id = 0; cpu_id < cpu_load_len; ++cpu_id) {
     gst_tracer_record_log (tr_cpuusage, cpu_id, cpu_load[cpu_id]);
   }
-  do_printf_cpuusage_event (CPUUSAGE_EVENT_ID, cpu_load_len, cpu_load);
+  do_print_cpuusage_event (CPUUSAGE_EVENT_ID, cpu_load_len, cpu_load);
 
   return TRUE;
 }
@@ -130,7 +130,7 @@ create_metadata_event (GstPeriodicTracer * tracer)
   cpu_num = self->cpu_usage.cpu_num;
 
   event_header =
-      g_strdup_printff (cpuusage_metadata_event_header, CPUUSAGE_EVENT_ID, 0);
+      g_strdup_printf (cpuusage_metadata_event_header, CPUUSAGE_EVENT_ID, 0);
 
   str_size = strlen (event_header);
 
@@ -152,7 +152,7 @@ create_metadata_event (GstPeriodicTracer * tracer)
     /* floating point field definition:
      * http://diamon.org/ctf/#spec4.1.7
      */
-    number_of_bytes = g_snprintff (mem,
+    number_of_bytes = g_snprintf (mem,
         mem_size,
         floating_point_event_field,
         (unsigned long) (sizeof (gfloat) * CHAR_BIT - FLT_MANT_DIG),

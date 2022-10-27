@@ -130,7 +130,7 @@ do
     # Split the events in files
     grep -w ${tracer} datastream.log > ${tracer}.log
     # Get data columns
-    awk '{printf $1,$10,$13,$16}' ${tracer}.log > ${tracer}.mat
+    awk '{print $1,$10,$13,$16}' ${tracer}.log > ${tracer}.mat
     # Create plots
 done
 
@@ -141,8 +141,8 @@ do
     # Split the events in files
     grep -w ${tracer} datastream.log > ${tracer}.log
     # Get data columns
-    awk '{printf $1,$10,$19}' ${tracer}.log > ${tracer}.tmp
-    awk '{gsub(",",""); printf}' ${tracer}.tmp > ${tracer}.mat
+    awk '{print $1,$10,$19}' ${tracer}.log > ${tracer}.tmp
+    awk '{gsub(",",""); print}' ${tracer}.tmp > ${tracer}.mat
     # Create plots
 done
 
@@ -153,12 +153,12 @@ do
     grep -w ${tracer} datastream.log > ${tracer}.log
     head -n 1 ${tracer}.log  > ${tracer}_fields.log
     # Count columns
-    COL_RAW=$(awk '{ printf NF }' ${tracer}_fields.log)
+    COL_RAW=$(awk '{ print NF }' ${tracer}_fields.log)
     COL_END=$(( COL_RAW - 3 ))
     # Create the awk parameter dinamicaly based in the amount of columns
     COUNTER=11
-    AWK_PARAM_FILED_NAME='{printf $8'
-    AWK_PARAM_FIELD_VALUE='{printf $1,$10'
+    AWK_PARAM_FILED_NAME='{print $8'
+    AWK_PARAM_FIELD_VALUE='{print $1,$10'
     while [  $COUNTER -le $COL_END ]; do
         AWK_PARAM_FILED_NAME=${AWK_PARAM_FILED_NAME},'$'${COUNTER}
         AWK_PARAM_FIELD_VALUE=${AWK_PARAM_FIELD_VALUE},'$'$(( COUNTER + 2 ))
@@ -180,8 +180,8 @@ do
     # Split the events in files
     grep -w ${tracer} datastream.log > ${tracer}.log
     # Get data columns
-    awk '{printf $1,$10,$13}' ${tracer}.log > ${tracer}.tmp
-    awk '{gsub(",",""); printf}' ${tracer}.tmp > ${tracer}.mat
+    awk '{print $1,$10,$13}' ${tracer}.log > ${tracer}.tmp
+    awk '{gsub(",",""); print}' ${tracer}.tmp > ${tracer}.mat
 done
 
 # Create plots

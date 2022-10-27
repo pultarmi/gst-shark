@@ -56,7 +56,7 @@ function [serie_name_list,timestamp_mat,value_mat] = load_serie_timestamp_value(
 
     if (RESULT)
         for list_idx = 1:length(serie_name_list)
-            printff('Serie: %s events: %d \n',serie_name_list{list_idx},serie_freq_list(list_idx));
+            printf('Serie: %s events: %d \n',serie_name_list{list_idx},serie_freq_list(list_idx));
         end
     end
 

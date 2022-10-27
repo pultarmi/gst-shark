@@ -59,7 +59,7 @@ gst_dot_pipeline_to_file (GstBin * bin, GstDebugGraphDetails flags)
 
   trace_dir = get_ctf_path_name ();
 
-  full_trace_dir = g_strdup_printff ("%s" G_DIR_SEPARATOR_S "graphic",
+  full_trace_dir = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "graphic",
       trace_dir);
 
   if (!g_file_test (full_trace_dir, G_FILE_TEST_EXISTS)) {
@@ -76,7 +76,7 @@ gst_dot_pipeline_to_file (GstBin * bin, GstDebugGraphDetails flags)
 
   strftime (time_suffix, MAX_SUFFIX_LEN, "%F_%T", localtime (&now));
 
-  full_file_name = g_strdup_printff ("%s" G_DIR_SEPARATOR_S "%s_%s.dot",
+  full_file_name = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s_%s.dot",
       full_trace_dir, GST_OBJECT_NAME (bin), time_suffix);
 
   out = g_fopen (full_file_name, "w");

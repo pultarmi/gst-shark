@@ -115,7 +115,7 @@ CRUFT_FILES = \
 	$(top_builddir)/common/m4/lt~obsolete.m4 \
 	$(top_builddir)/common/m4/nls.m4 \
 	$(top_builddir)/common/m4/po.m4 \
-	$(top_builddir)/common/m4/printff-posix.m4 \
+	$(top_builddir)/common/m4/printf-posix.m4 \
 	$(top_builddir)/common/m4/progtest.m4 \
 	$(top_builddir)/common/m4/size_max.m4 \
 	$(top_builddir)/common/m4/stdint_h.m4 \

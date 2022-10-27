@@ -59,7 +59,7 @@ end
 
 if (RESULT)
     for list_idx = 1:length(pad_name_list)
-        printff('%s %d \n',pad_name_list{list_idx},pad_freq_list(list_idx));
+        printf('%s %d \n',pad_name_list{list_idx},pad_freq_list(list_idx));
     end
 end
 

@@ -9,11 +9,11 @@ function plot_legend(label_list,fig_title,fig_save,image_name,format)
         disp('Save schedule legend...')
         switch format
             case 'pdf'
-                printf tracer -dpdf -append
+                print tracer -dpdf -append
             case 'png'
-                printf(image_name,'-dpng');
+                print(image_name,'-dpng');
             otherwise
-                printff('octave: WARN: %s is not supported',format)
+                printf('octave: WARN: %s is not supported',format)
         end
     end
 end

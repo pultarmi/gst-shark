@@ -61,7 +61,7 @@ for i = 1:nargin
         otherwise
             if (0 != length(option))
             length(option)
-                printff('octave: WARN: \"%s\" tracer does not exist',option)
+                printf('octave: WARN: \"%s\" tracer does not exist',option)
             end
     end
 end
@@ -70,6 +70,6 @@ end
 if (0 != exist('tracer'))
     plot_tracer(tracer,GSTSHARK_SAVEFIG,GSTSHARK_SAVEFIG_FORMAT,GSTSHARK_LEGEND)
 end
-printff ("\n")
+printf ("\n")
 
  

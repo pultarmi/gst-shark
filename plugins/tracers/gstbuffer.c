@@ -21,7 +21,7 @@
  * SECTION:gstbuffer
  * @short_description: log current idendity
  *
- * A tracing module that printfs buffer info at every sink pad
+ * A tracing module that prints buffer info at every sink pad
  */
 
 #include "gstbuffer.h"
@@ -87,16 +87,16 @@ gst_buffer_buffer_pre (GObject * self, GstClockTime ts, GstPad * pad,
   gchar *sflags;
   guint refcount;
 
-  pad_name = g_strdup_printff ("%s:%s", GST_DEBUG_PAD_NAME (pad));
+  pad_name = g_strdup_printf ("%s:%s", GST_DEBUG_PAD_NAME (pad));
 
   pts = GST_BUFFER_PTS (buffer);
-  spts = g_strdup_printff ("%" GST_TIME_FORMAT, GST_TIME_ARGS (pts));
+  spts = g_strdup_printf ("%" GST_TIME_FORMAT, GST_TIME_ARGS (pts));
 
   dts = GST_BUFFER_DTS (buffer);
-  sdts = g_strdup_printff ("%" GST_TIME_FORMAT, GST_TIME_ARGS (dts));
+  sdts = g_strdup_printf ("%" GST_TIME_FORMAT, GST_TIME_ARGS (dts));
 
   duration = GST_BUFFER_DURATION (buffer);
-  sduration = g_strdup_printff ("%" GST_TIME_FORMAT, GST_TIME_ARGS (duration));
+  sduration = g_strdup_printf ("%" GST_TIME_FORMAT, GST_TIME_ARGS (duration));
 
   offset = GST_BUFFER_OFFSET (buffer);
   offset_end = GST_BUFFER_OFFSET_END (buffer);
@@ -113,7 +113,7 @@ gst_buffer_buffer_pre (GObject * self, GstClockTime ts, GstPad * pad,
   gst_tracer_record_log (tr_buffer, pad_name, spts, sdts, sduration, offset,
       offset_end, size, sflags, refcount);
 
-  do_printf_buffer_event (BUFFER_EVENT_ID, pad_name, pts, dts, duration,
+  do_print_buffer_event (BUFFER_EVENT_ID, pad_name, pts, dts, duration,
       offset, offset_end, size, flags, refcount);
 
   g_value_unset (&vflags);
@@ -179,7 +179,7 @@ gst_buffer_tracer_class_init (GstBufferTracerClass * klass)
           G_TYPE_UINT, "description", G_TYPE_STRING, "Ref Count", "min",
           G_TYPE_UINT, 0, "max", G_TYPE_UINT, G_MAXUINT32, NULL), NULL);
 
-  metadata_event = g_strdup_printff (buffer_metadata_event, BUFFER_EVENT_ID, 0);
+  metadata_event = g_strdup_printf (buffer_metadata_event, BUFFER_EVENT_ID, 0);
   add_metadata_event_struct (metadata_event);
   g_free (metadata_event);
 }
