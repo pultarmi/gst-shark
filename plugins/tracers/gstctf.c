@@ -311,7 +311,7 @@ generate_datastream_header (void)
   mem = ctf_descriptor->mem;
   event_mem = mem + TCP_HEADER_SIZE;
 
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA1\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* The begin of the data stream header is compound by the Magic Number,
      the trace UUID and the Stream ID. These are all required fields. */
   /* Magic Number */
@@ -411,7 +411,7 @@ generate_metadata (gint major, gint minor, gint byte_order)
 
   uuid_to_uuidstring (uuid_string, ctf_descriptor->uuid);
 
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA2\n"); g_mutex_lock (&ctf_descriptor->mutex);
 
   str_len =
       g_snprintf ((gchar *) event_mem, CTF_MEM_SIZE, metadata_fmt, major, minor,
@@ -741,7 +741,7 @@ add_metadata_event_struct (const gchar * metadata_event)
 
   /* This function only writes the event structure to the metadata file, it
      depends entirely of what is passed as an argument. */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA3\n"); g_mutex_lock (&ctf_descriptor->mutex);
 
   memcpy (event_mem, metadata_event, event_size);
 
@@ -777,7 +777,7 @@ do_print_cpuusage_event (event_id id, guint32 cpu_num, gfloat * cpuload)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem, datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA4\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write CPU load for each CPU */
@@ -820,7 +820,7 @@ do_print_proctime_event (event_id id, gchar * elementname, guint64 time)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA5\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write element name */
@@ -862,7 +862,7 @@ do_print_framerate_event (event_id id, gchar * elementname, guint64 fps)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA6\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write element name */
@@ -907,7 +907,7 @@ do_print_interlatency_event (event_id id,
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA7\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Add event payload */
@@ -951,7 +951,7 @@ do_print_scheduling_event (event_id id, gchar * elementname, guint64 time)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA8\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Add event payload */
@@ -998,7 +998,7 @@ do_print_queue_level_event (event_id id, const gchar * elementname,
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA9\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Add event payload */
@@ -1057,7 +1057,7 @@ do_print_bitrate_event (event_id id, gchar * elementname, guint64 bps)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA10\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write element name */
@@ -1103,7 +1103,7 @@ do_print_buffer_event (event_id id, const gchar * pad, GstClockTime pts,
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA11\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
 
@@ -1147,7 +1147,7 @@ do_print_ctf_init (event_id id)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA13\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write padding */
