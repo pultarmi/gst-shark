@@ -127,13 +127,13 @@ log_latency (GstInterLatencyTracer * interlatency_tracer,
       latency_probe_pad, GST_TYPE_PAD, &src_pad,
       latency_probe_ts, G_TYPE_UINT64, &src_ts, NULL);
 
-  src = g_strdup_printf ("%s_%s", GST_DEBUG_PAD_NAME (src_pad));
-  sink = g_strdup_printf ("%s_%s", GST_DEBUG_PAD_NAME (sink_pad));
+  src = g_strdup_printff ("%s_%s", GST_DEBUG_PAD_NAME (src_pad));
+  sink = g_strdup_printff ("%s_%s", GST_DEBUG_PAD_NAME (sink_pad));
 
   time = GST_CLOCK_DIFF (src_ts, sink_ts);
 
   time_string = g_string_new ("");
-  g_string_printf (time_string, "%" GST_TIME_FORMAT, GST_TIME_ARGS (time));
+  g_string_printff (time_string, "%" GST_TIME_FORMAT, GST_TIME_ARGS (time));
 
 #ifdef GST_STABLE_RELEASE
   gst_tracer_record_log (tr_interlatency, src, sink, time_string->str);
@@ -144,7 +144,7 @@ log_latency (GstInterLatencyTracer * interlatency_tracer,
           "to_pad", G_TYPE_STRING, sink,
           "time", G_TYPE_STRING, time_string->str, NULL));
 #endif
-  do_print_interlatency_event (INTERLATENCY_EVENT_ID, src, sink, time);
+  do_printf_interlatency_event (INTERLATENCY_EVENT_ID, src, sink, time);
 
   g_string_free (time_string, TRUE);
   g_free (src);
@@ -314,7 +314,7 @@ gst_interlatency_tracer_class_init (GstInterLatencyTracerClass * klass)
   oclass->dispose = gst_interlatency_tracer_dispose;
 
   metadata_event =
-      g_strdup_printf (interlatency_metadata_event, INTERLATENCY_EVENT_ID, 0);
+      g_strdup_printff (interlatency_metadata_event, INTERLATENCY_EVENT_ID, 0);
   add_metadata_event_struct (metadata_event);
   g_free (metadata_event);
 }

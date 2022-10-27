@@ -53,7 +53,7 @@ static gchar *make_char_array_valid (gchar * src);
 static void create_metadata_event (GstPeriodicTracer * tracer);
 static void add_bytes (GstBitrateTracer * self, GstClockTime ts, GstPad * pad,
     guint64 bytes);
-static gboolean do_print_bitrate (GstPeriodicTracer * tracer);
+static gboolean do_printf_bitrate (GstPeriodicTracer * tracer);
 static void reset_counters (GstPeriodicTracer * tracer);
 
 typedef struct _GstBitrateHash GstBitrateHash;
@@ -76,7 +76,7 @@ static const gchar bitrate_metadata_event[] = "event {\n\
 \n";
 
 static gboolean
-do_print_bitrate (GstPeriodicTracer * tracer)
+do_printf_bitrate (GstPeriodicTracer * tracer)
 {
   GstBitrateTracer *self;
   GHashTableIter iter;
@@ -85,14 +85,14 @@ do_print_bitrate (GstPeriodicTracer * tracer)
 
   self = GST_BITRATE_TRACER (tracer);
 
-  /* Using the iterator functions to go through the Hash table and print the bitrate
+  /* Using the iterator functions to go through the Hash table and printf the bitrate
      of every element stored */
   g_hash_table_iter_init (&iter, self->bitrate_counters);
   while (g_hash_table_iter_next (&iter, &key, &value)) {
     pad_table = (GstBitrateHash *) value;
 
     gst_tracer_record_log (tr_bitrate, pad_table->fullname, pad_table->bitrate);
-    do_print_bitrate_event (BITRATE_EVENT_ID, pad_table->fullname,
+    do_printf_bitrate_event (BITRATE_EVENT_ID, pad_table->fullname,
         pad_table->bitrate);
 
     pad_table->bitrate = 0;
@@ -132,7 +132,7 @@ add_bytes (GstBitrateTracer * self, GstClockTime ts, GstPad * pad,
   if (NULL == pad_frames) {
     /* The full name of every pad has the format elementName.padName and it is going 
        to be used for displaying the bitrate in a friendly user way */
-    fullname = g_strdup_printf ("%s_%s", GST_DEBUG_PAD_NAME (pad));
+    fullname = g_strdup_printff ("%s_%s", GST_DEBUG_PAD_NAME (pad));
     fullname = make_char_array_valid (fullname);
 
     GST_INFO_OBJECT (self, "The %s key was added to the Hash Table", fullname);
@@ -213,7 +213,7 @@ gst_bitrate_tracer_class_init (GstBitrateTracerClass * klass)
 
   gobject_class->finalize = gst_bitrate_tracer_finalize;
 
-  ptracer_class->timer_callback = GST_DEBUG_FUNCPTR (do_print_bitrate);
+  ptracer_class->timer_callback = GST_DEBUG_FUNCPTR (do_printf_bitrate);
   ptracer_class->reset = GST_DEBUG_FUNCPTR (reset_counters);
   ptracer_class->write_header = GST_DEBUG_FUNCPTR (create_metadata_event);
 
@@ -255,7 +255,7 @@ create_metadata_event (GstPeriodicTracer * tracer)
 
   /* Add event in metadata file */
   metadata_event =
-      g_strdup_printf (bitrate_metadata_event, BITRATE_EVENT_ID, 0);
+      g_strdup_printff (bitrate_metadata_event, BITRATE_EVENT_ID, 0);
   add_metadata_event_struct (metadata_event);
   g_free (metadata_event);
 }

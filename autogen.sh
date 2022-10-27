@@ -44,32 +44,32 @@ CONFIGURE_DEF_OPT='--enable-maintainer-mode --enable-gtk-doc'
 
 autogen_options $@
 
-printf "+ check for build tools"
+printff "+ check for build tools"
 if test -z "$NOCHECK"; then
   echo
 
-  printf "  checking for autoreconf ... "
+  printff "  checking for autoreconf ... "
   echo
   which "autoreconf" 2>/dev/null || {
     echo "not found! Please install the autoconf package."
     exit 1
   }
 
-  printf "  checking for automake ... "
+  printff "  checking for automake ... "
   echo
   which "automake" 2>/dev/null || {
     echo "not found! Please install the automake package."
     exit 1
   }
 
-  printf "  checking for pkg-config ... "
+  printff "  checking for pkg-config ... "
   echo
   which "pkg-config" 2>/dev/null || {
     echo "not found! Please install pkg-config."
     exit 1
   }
 
-  printf "  checking for libtool ... "
+  printff "  checking for libtool ... "
   echo
   which "libtool" 2>/dev/null || which "libtoolize" 2>/dev/null || {
     echo "not found! Please install libtool."
@@ -79,7 +79,7 @@ else
   echo ": skipped version checks"
 fi
 
-# if no arguments specified then this will be printed
+# if no arguments specified then this will be printfed
 if test -z "$*" && test -z "$NOCONFIGURE"; then
   echo "+ checking for autogen.sh options"
   echo "  This autogen script will automatically run ./configure as:"

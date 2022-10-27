@@ -99,7 +99,7 @@ sched_time_compute (GstTracer * tracer, guint64 ts, GstPad * pad)
   self = GST_SCHEDULETIME_TRACER (tracer);
   schedule_pads = self->schedule_pads;
 
-  g_snprintf (pad_name, PAD_NAME_SIZE, "%s_%s", GST_DEBUG_PAD_NAME (pad));
+  g_snprintff (pad_name, PAD_NAME_SIZE, "%s_%s", GST_DEBUG_PAD_NAME (pad));
   schedule_pad = (GstSchedulePad *) g_hash_table_lookup (schedule_pads, pad);
 
   if (NULL == schedule_pad) {
@@ -117,12 +117,12 @@ sched_time_compute (GstTracer * tracer, guint64 ts, GstPad * pad)
   if (schedule_pad->previous_time != 0) {
     time_string = g_string_new ("");
     time_diff = GST_CLOCK_DIFF (schedule_pad->previous_time, ts);
-    g_string_printf (time_string, "%" GST_TIME_FORMAT,
+    g_string_printff (time_string, "%" GST_TIME_FORMAT,
         GST_TIME_ARGS (time_diff));
 
     gst_tracer_record_log (tr_schedule, pad_name, time_string->str);
 
-    do_print_scheduling_event (SCHED_TIME_EVENT_ID, pad_name, time_diff);
+    do_printf_scheduling_event (SCHED_TIME_EVENT_ID, pad_name, time_diff);
     g_string_free (time_string, TRUE);
   }
   schedule_pad->previous_time = ts;
@@ -170,7 +170,7 @@ gst_scheduletime_tracer_class_init (GstScheduletimeTracerClass * klass)
           GST_TRACER_VALUE_SCOPE_PROCESS, NULL), NULL);
 
   metadata_event =
-      g_strdup_printf (scheduling_metadata_event, SCHED_TIME_EVENT_ID, 0);
+      g_strdup_printff (scheduling_metadata_event, SCHED_TIME_EVENT_ID, 0);
   add_metadata_event_struct (metadata_event);
   g_free (metadata_event);
 }

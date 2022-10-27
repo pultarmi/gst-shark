@@ -26,7 +26,7 @@
 #include <gst/gst.h>
 #include <glib.h>
 #include <glib/gstdio.h>
-#include <glib/gprintf.h>
+#include <glib/gprintff.h>
 #include <gio/gio.h>
 #include <string.h>
 
@@ -311,7 +311,7 @@ generate_datastream_header (void)
   mem = ctf_descriptor->mem;
   event_mem = mem + TCP_HEADER_SIZE;
 
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* The begin of the data stream header is compound by the Magic Number,
      the trace UUID and the Stream ID. These are all required fields. */
   /* Magic Number */
@@ -359,14 +359,14 @@ uuid_to_uuidstring (gchar * uuid_string, guint8 * uuid)
   for (uuid_idx = 0; uuid_idx < 4; ++uuid_idx) {
     byte = 0xFF & uuid[uuid_idx];
 
-    g_sprintf (uuid_string_idx, "%x", byte);
+    g_sprintff (uuid_string_idx, "%x", byte);
     uuid_string_idx += 2;
   }
   *(uuid_string_idx++) = '-';
 
   for (; uuid_idx < 6; ++uuid_idx) {
     byte = 0xFF & uuid[uuid_idx];
-    g_sprintf (uuid_string_idx, "%x", byte);
+    g_sprintff (uuid_string_idx, "%x", byte);
     uuid_string_idx += 2;
   }
   *(uuid_string_idx++) = '-';
@@ -374,21 +374,21 @@ uuid_to_uuidstring (gchar * uuid_string, guint8 * uuid)
   for (; uuid_idx < 8; ++uuid_idx) {
     byte = 0xFF & uuid[uuid_idx];
 
-    g_sprintf (uuid_string_idx, "%x", byte);
+    g_sprintff (uuid_string_idx, "%x", byte);
     uuid_string_idx += 2;
   }
   *(uuid_string_idx++) = '-';
 
   for (; uuid_idx < 10; ++uuid_idx) {
     byte = 0xFF & uuid[uuid_idx];
-    g_sprintf (uuid_string_idx, "%x", byte);
+    g_sprintff (uuid_string_idx, "%x", byte);
     uuid_string_idx += 2;
   }
   *(uuid_string_idx++) = '-';
 
   for (; uuid_idx < 16; ++uuid_idx) {
     byte = 0xFF & uuid[uuid_idx];
-    g_sprintf (uuid_string_idx, "%x", byte);
+    g_sprintff (uuid_string_idx, "%x", byte);
     uuid_string_idx += 2;
   }
 
@@ -411,10 +411,10 @@ generate_metadata (gint major, gint minor, gint byte_order)
 
   uuid_to_uuidstring (uuid_string, ctf_descriptor->uuid);
 
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
 
   str_len =
-      g_snprintf ((gchar *) event_mem, CTF_MEM_SIZE, metadata_fmt, major, minor,
+      g_snprintff ((gchar *) event_mem, CTF_MEM_SIZE, metadata_fmt, major, minor,
       uuid_string, byte_order ? "le" : "be");
   if (CTF_MEM_SIZE == str_len) {
     GST_ERROR ("Insufficient memory to create metadata");
@@ -716,7 +716,7 @@ gst_ctf_init (void)
 
   generate_metadata (1, 3, BYTE_ORDER_LE);
   generate_datastream_header ();
-  do_print_ctf_init (INIT_EVENT_ID);
+  do_printf_ctf_init (INIT_EVENT_ID);
 
 
   return TRUE;
@@ -741,7 +741,7 @@ add_metadata_event_struct (const gchar * metadata_event)
 
   /* This function only writes the event structure to the metadata file, it
      depends entirely of what is passed as an argument. */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
 
   memcpy (event_mem, metadata_event, event_size);
 
@@ -759,7 +759,7 @@ add_metadata_event_struct (const gchar * metadata_event)
 
 
 void
-do_print_cpuusage_event (event_id id, guint32 cpu_num, gfloat * cpuload)
+do_printf_cpuusage_event (event_id id, guint32 cpu_num, gfloat * cpuload)
 {
   GError *error;
   guint8 *mem;
@@ -777,7 +777,7 @@ do_print_cpuusage_event (event_id id, guint32 cpu_num, gfloat * cpuload)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem, datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write CPU load for each CPU */
@@ -803,7 +803,7 @@ do_print_cpuusage_event (event_id id, guint32 cpu_num, gfloat * cpuload)
 }
 
 void
-do_print_proctime_event (event_id id, gchar * elementname, guint64 time)
+do_printf_proctime_event (event_id id, gchar * elementname, guint64 time)
 {
   GError *error;
   guint8 *mem;
@@ -820,7 +820,7 @@ do_print_proctime_event (event_id id, gchar * elementname, guint64 time)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write element name */
@@ -845,7 +845,7 @@ do_print_proctime_event (event_id id, gchar * elementname, guint64 time)
 }
 
 void
-do_print_framerate_event (event_id id, gchar * elementname, guint64 fps)
+do_printf_framerate_event (event_id id, gchar * elementname, guint64 fps)
 {
   GError *error;
   guint8 *mem;
@@ -862,7 +862,7 @@ do_print_framerate_event (event_id id, gchar * elementname, guint64 fps)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write element name */
@@ -887,7 +887,7 @@ do_print_framerate_event (event_id id, gchar * elementname, guint64 fps)
 }
 
 void
-do_print_interlatency_event (event_id id,
+do_printf_interlatency_event (event_id id,
     gchar * originpad, gchar * destinationpad, guint64 time)
 {
   GError *error;
@@ -907,7 +907,7 @@ do_print_interlatency_event (event_id id,
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Add event payload */
@@ -934,7 +934,7 @@ do_print_interlatency_event (event_id id,
 }
 
 void
-do_print_scheduling_event (event_id id, gchar * elementname, guint64 time)
+do_printf_scheduling_event (event_id id, gchar * elementname, guint64 time)
 {
   GError *error;
   guint8 *mem;
@@ -951,7 +951,7 @@ do_print_scheduling_event (event_id id, gchar * elementname, guint64 time)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Add event payload */
@@ -977,7 +977,7 @@ do_print_scheduling_event (event_id id, gchar * elementname, guint64 time)
 }
 
 void
-do_print_queue_level_event (event_id id, const gchar * elementname,
+do_printf_queue_level_event (event_id id, const gchar * elementname,
     guint32 bytes, guint32 max_bytes, guint32 buffers, guint32 max_buffers,
     guint64 time, guint64 max_time)
 {
@@ -998,7 +998,7 @@ do_print_queue_level_event (event_id id, const gchar * elementname,
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Add event payload */
@@ -1040,7 +1040,7 @@ do_print_queue_level_event (event_id id, const gchar * elementname,
 }
 
 void
-do_print_bitrate_event (event_id id, gchar * elementname, guint64 bps)
+do_printf_bitrate_event (event_id id, gchar * elementname, guint64 bps)
 {
   GError *error;
   guint8 *mem;
@@ -1057,7 +1057,7 @@ do_print_bitrate_event (event_id id, gchar * elementname, guint64 bps)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write element name */
@@ -1082,7 +1082,7 @@ do_print_bitrate_event (event_id id, gchar * elementname, guint64 bps)
 }
 
 void
-do_print_buffer_event (event_id id, const gchar * pad, GstClockTime pts,
+do_printf_buffer_event (event_id id, const gchar * pad, GstClockTime pts,
     GstClockTime dts, GstClockTime duration, guint64 offset,
     guint64 offset_end, guint64 size, GstBufferFlags flags, guint32 refcount)
 {
@@ -1103,7 +1103,7 @@ do_print_buffer_event (event_id id, const gchar * pad, GstClockTime pts,
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
 
@@ -1135,7 +1135,7 @@ do_print_buffer_event (event_id id, const gchar * pad, GstClockTime pts,
 }
 
 void
-do_print_ctf_init (event_id id)
+do_printf_ctf_init (event_id id)
 {
   GError *error;
   guint32 unknown = 0;
@@ -1147,7 +1147,7 @@ do_print_ctf_init (event_id id)
   event_mem = mem + TCP_HEADER_SIZE;
 
   /* Lock mem and datastream and output_stream resources */
-  print("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
+  printf("AAAAAAAAAAAAAA\n"); g_mutex_lock (&ctf_descriptor->mutex);
   /* Add CTF header */
   CTF_EVENT_WRITE_HEADER (id, event_mem);
   /* Write padding */

@@ -92,11 +92,11 @@ do_push_buffer_pre (GstTracer * self, guint64 ts, GstPad * pad)
       should_calculate);
 
   if (should_log) {
-    time_string = g_strdup_printf ("%" GST_TIME_FORMAT, GST_TIME_ARGS (time));
+    time_string = g_strdup_printff ("%" GST_TIME_FORMAT, GST_TIME_ARGS (time));
 
     gst_tracer_record_log (tr_proc_time, name, time_string);
 
-    do_print_proctime_event (PROCTIME_EVENT_ID, name, time);
+    do_printf_proctime_event (PROCTIME_EVENT_ID, name, time);
 
     g_free (time_string);
   }
@@ -149,7 +149,7 @@ gst_proc_time_tracer_class_init (GstProcTimeTracerClass * klass)
           GST_TRACER_VALUE_SCOPE_PROCESS, NULL), NULL);
 
   metadata_event =
-      g_strdup_printf (proc_time_metadata_event, PROCTIME_EVENT_ID, 0);
+      g_strdup_printff (proc_time_metadata_event, PROCTIME_EVENT_ID, 0);
   add_metadata_event_struct (metadata_event);
   g_free (metadata_event);
 }

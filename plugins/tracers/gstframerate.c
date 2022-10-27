@@ -54,7 +54,7 @@ static GstTracerRecord *tr_framerate;
 
 static gchar *make_char_array_valid (gchar * src);
 static void create_metadata_event (GstPeriodicTracer * tracer);
-static gboolean print_framerate (GstPeriodicTracer * tracer);
+static gboolean printf_framerate (GstPeriodicTracer * tracer);
 static void reset_counters (GstPeriodicTracer * tracer);
 static void consider_frames (GstFramerateTracer * self, GstPad * pad,
     guint amount);
@@ -93,7 +93,7 @@ gst_framerate_tracer_class_init (GstFramerateTracerClass * klass)
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
   ptracer_class->reset = GST_DEBUG_FUNCPTR (reset_counters);
-  ptracer_class->timer_callback = GST_DEBUG_FUNCPTR (print_framerate);
+  ptracer_class->timer_callback = GST_DEBUG_FUNCPTR (printf_framerate);
   ptracer_class->write_header = GST_DEBUG_FUNCPTR (create_metadata_event);
 
   gobject_class->finalize = gst_framerate_tracer_finalize;
@@ -155,7 +155,7 @@ create_metadata_event (GstPeriodicTracer * tracer)
 {
   gchar *metadata_event;
 
-  metadata_event = g_strdup_printf (framerate_metadata_event, FPS_EVENT_ID, 0);
+  metadata_event = g_strdup_printff (framerate_metadata_event, FPS_EVENT_ID, 0);
 
   /* Add event in metadata file */
   add_metadata_event_struct (metadata_event);
@@ -163,7 +163,7 @@ create_metadata_event (GstPeriodicTracer * tracer)
 }
 
 static gboolean
-print_framerate (GstPeriodicTracer * tracer)
+printf_framerate (GstPeriodicTracer * tracer)
 {
   GstFramerateTracer *self;
   GHashTableIter iter;
@@ -175,7 +175,7 @@ print_framerate (GstPeriodicTracer * tracer)
   /* Lock the tracer to make sure no new pad is added while we are logging */
   GST_OBJECT_LOCK (self);
 
-  /* Using the iterator functions to go through the Hash table and print the framerate 
+  /* Using the iterator functions to go through the Hash table and printf the framerate
      of every element stored */
   g_hash_table_iter_init (&iter, self->frame_counters);
   while (g_hash_table_iter_next (&iter, &key, &value)) {
@@ -183,7 +183,7 @@ print_framerate (GstPeriodicTracer * tracer)
 
     gst_tracer_record_log (tr_framerate, pad_table->fullname,
         pad_table->counter);
-    do_print_framerate_event (FPS_EVENT_ID, pad_table->fullname,
+    do_printf_framerate_event (FPS_EVENT_ID, pad_table->fullname,
         pad_table->counter);
     pad_table->counter = 0;
   }
@@ -227,7 +227,7 @@ consider_frames (GstFramerateTracer * self, GstPad * pad, guint amount)
 
     /* The full name of every pad has the format elementName_padName and it is going 
        to be used for displaying the framerate in a friendly user way */
-    fullname = g_strdup_printf ("%s_%s", GST_DEBUG_PAD_NAME (pad));
+    fullname = g_strdup_printff ("%s_%s", GST_DEBUG_PAD_NAME (pad));
     fullname = make_char_array_valid (fullname);
 
     pad_frames = g_malloc (sizeof (GstFramerateHash));
